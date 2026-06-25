@@ -1,10 +1,6 @@
 name: Enterprise Build and SonarQube Pipeline
 
 on:
-  push:
-    branches:
-      - main
-
   workflow_dispatch:
 
 jobs:
@@ -20,7 +16,6 @@ jobs:
 
       - name: Setup Java
         uses: actions/setup-java@v4
-
         with:
           distribution: temurin
           java-version: '17'
@@ -30,32 +25,19 @@ jobs:
           java -version
           mvn -version
 
-      - name: Compile Application
+      - name: Build, Test and SonarQube Analysis
         run: |
-          mvn clean compile
+          mvn clean verify sonar:sonar \
+            -Dsonar.projectKey=enterprise-java-pipeline \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
-      - name: Run Unit Tests
+      - name: Verify Generated Files
         run: |
-          mvn test
-
-      - name: Package Application
-        run: |
-          mvn package
-
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v6
-
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
-        with:
-          args: >
-            -Dsonar.projectKey=enterprise-java-pipeline
+          ls -R target
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
-
         with:
           name: java-build-artifact
           path: target/*.jar
