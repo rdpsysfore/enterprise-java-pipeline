@@ -51,7 +51,7 @@ jobs:
 
         with:
           args: >
-            -Dsonar.projectKey=GUI-Algorithm-Calculator
+            -Dsonar.projectKey=enterprise-java-pipeline
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
