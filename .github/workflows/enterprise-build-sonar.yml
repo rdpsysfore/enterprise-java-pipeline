@@ -1,6 +1,5 @@
 # Enterprise Build and SonarQube Pipeline with Docker Build
 
-```yaml
 name: Enterprise Build and SonarQube Pipeline
 
 on:
