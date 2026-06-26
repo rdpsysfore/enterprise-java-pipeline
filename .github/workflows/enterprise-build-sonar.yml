@@ -75,19 +75,7 @@ jobs:
         run: |
           docker build \
             -t ${{ secrets.DOCKER_USERNAME }}/enterprise-java-pipeline:${{ github.run_number }} \
-            -t ${{ secrets.DOCKER_USERNAME }}/enterprise-java-pipeline:latest .
-      - name: Verify Repository Files
-        run: |
-          echo "Current Directory:"
-          pwd
-
-          echo ""
-          echo "Files:"
-          ls -la
-
-          echo ""
-          echo "Searching for Dockerfile:"
-          find . -name Dockerfile     
+            -t ${{ secrets.DOCKER_USERNAME }}/enterprise-java-pipeline:latest .    
          
       - name: Verify Docker Images
         run: |
