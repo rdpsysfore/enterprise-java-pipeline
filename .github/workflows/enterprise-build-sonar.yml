@@ -57,12 +57,6 @@ jobs:
       
       - name: Checkout Source Code
         uses: actions/checkout@v4
-      - name: Verify Repository
-        run: |
-          pwd
-          ls -la
-          echo "-------------------"
-          cat Dockerfile
 
       - name: Download Build Artifact
         uses: actions/download-artifact@v4
@@ -79,6 +73,12 @@ jobs:
         run: |
           echo "IMAGE_VERSION=${{ github.run_number }}" >> $GITHUB_ENV
           echo "Version = ${{ github.run_number }}"
+      - name: Verify Repository
+        run: |
+          pwd
+          ls -la
+          echo "-------------------"
+          cat Dockerfile
 
       - name: Build Docker Image
         run: |
